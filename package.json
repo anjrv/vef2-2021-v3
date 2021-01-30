@@ -1,0 +1,31 @@
+{
+  "name": "vef2-2021-v2",
+  "version": "1.0.0",
+  "description": "Verkefni 2",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "setup" : "node setup.js",
+    "eslint" : "eslint *.js",
+    "test" : "npm run eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anjrv/vef2-2021-v2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-validator": "^6.9.2",
+    "pg": "^8.5.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.18.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "nodemon": "^2.0.7"
+  }
+}
