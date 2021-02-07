@@ -1,0 +1,11 @@
+<%- include('header') -%>
+
+<h1><%= error.code === '23505' ? 'Gat ekki skráð!' : 'Villa kom upp!' %></h1>
+
+<% if (typeof error !== 'undefined') { %>
+  <p><%= error.code === '23505' ? 'Hafðir þú skrifað undir áður?' : error %></p>
+<% } %>
+
+<a href="/">Til baka</a>
+
+<%- include('footer') -%>

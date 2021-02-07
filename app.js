@@ -2,8 +2,10 @@ require('dotenv').config();
 
 const path = require('path');
 const express = require('express');
+const sign = require('./sign');
 
-const signatures = require('./signatures');
+const formatDate = require('./src/lib/formatDate');
+const formatName = require('./src/lib/formatName');
 
 const app = express();
 
@@ -12,6 +14,9 @@ app.use(express.urlencoded({ extended: true }));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.locals.formatDate = formatDate;
+app.locals.formatName = formatName;
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 function isInvalid(field, errors) {
@@ -19,8 +24,7 @@ function isInvalid(field, errors) {
 }
 
 app.locals.isInvalid = isInvalid;
-
-app.use('/signatures', signatures);
+app.use('/', sign);
 
 function notFoundHandler(req, res, next) { // eslint-disable-line
   res.status(404).render('error', { title: '404', error: '404 fannst ekki' });

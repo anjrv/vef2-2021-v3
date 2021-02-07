@@ -1,0 +1,83 @@
+<%- include('header') -%>
+
+<h1>Undirskriftarlisti</h1>
+
+<form class="sign" method="post" action="/">
+  <div
+    class="field<%= locals.isInvalid('name', errors) ? ' field--invalid' : '' %>"
+  >
+    <label for="name">Nafn*</label>
+    <input
+      required
+      type="text"
+      name="name"
+      id="name"
+      value="<%= name %>"
+      class=""
+    />
+  </div>
+  <div
+    class="field<%= locals.isInvalid('nationalId', errors) ? ' field--invalid' : '' %>"
+  >
+    <label for="nationalId">Kennitala*</label>
+    <input
+      required
+      type="text"
+      name="nationalId"
+      id="nationalId"
+      value="<%= nationalId %>"
+      class=""
+    />
+  </div>
+  <div
+    class="field<%= locals.isInvalid('comment', errors) ? ' field--invalid' : '' %>"
+  >
+    <label for="comment">Athugasemd:</label>
+    <textarea name="comment" id="comment"><%= comment %></textarea>
+  </div>
+  <div
+    class="field field--checkbox<%= locals.isInvalid('anonymous', errors) ? ' field--invalid' : false %>"
+  >
+    <input type="checkbox" name="anonymous" <%= anonymous === 'checked' ? true :
+    false %>>
+    <label for="anonymous">Ekki birta nafn á lista</label>
+  </div>
+
+  <% if (errors.length > 0) { %>
+  <h2>Villur við undirskrift:</h2>
+  <ul class="errors">
+    <% errors.forEach((error) => { %>
+    <li class="error">
+      <label for="<%= error.param %>"><%= error.msg %></label>
+    </li>
+    <% }); %>
+  </ul>
+  <% } %>
+
+  <button>Skrifa undir</button>
+</form>
+
+<h2>Undirskriftir</h2>
+
+<div class="signatures">
+  <% if (list.length === 0) { %>
+  <p>Engar undirskriftir.</p>
+  <% } %> <% if (list.length !== 0) { %>
+  <table style="width: 100%">
+    <tr>
+      <th>Dags</th>
+      <th>Nafn</th>
+      <th>Athugasemd</th>
+    </tr>
+    <% list.forEach((signature) => { %>
+    <tr class="signature">
+      <td><%= formatDate(signature.signed) %></td>
+      <td><%= formatName(signature) %></td>
+      <td><%= signature.comment %></td>
+    </tr>
+    <% }); %>
+  </table>
+  <% } %>
+</div>
+
+<%- include('footer') -%>

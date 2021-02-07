@@ -5,9 +5,9 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",
-    "setup" : "node setup.js",
-    "eslint" : "eslint *.js",
-    "test" : "npm run eslint"
+    "setup": "node setup.js",
+    "eslint": "eslint *.js",
+    "test": "npm run eslint"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,8 @@
     "ejs": "^3.1.5",
     "express": "^4.17.1",
     "express-validator": "^6.9.2",
-    "pg": "^8.5.1"
+    "pg": "^8.5.1",
+    "xss": "^1.0.8"
   },
   "devDependencies": {
     "eslint": "^7.18.0",
