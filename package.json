@@ -3,16 +3,15 @@
   "version": "1.0.0",
   "description": "Verkefni 2",
   "main": "app.js",
-  "type" : "module",
   "scripts": {
     "eslint": "eslint *.js ./src/**/*.js",
     "stylelint": "stylelint ./src/styles/*.scss --syntax scss",
     "test": "concurrently npm:eslint npm:stylelint",
     "sass": "node-sass --source-map-embed ./src/styles/styles.scss ./public/styles.css",
     "sass-watch": "node-sass --source-map-embed --watch --recursive src/styles/styles.scss ./public/styles.css",
-    "setup": "node setup.js",
-    "start": "node app.js",
-    "demon": "nodemon app.js",
+    "setup": "node ./src/setup.js",
+    "start": "node ./src/app.js",
+    "demon": "nodemon ./src/app.js",
     "dev": "concurrently npm:sass npm:sass-watch npm:demon"
   },
   "repository": {

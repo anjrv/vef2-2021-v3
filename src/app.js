@@ -1,9 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
-import { router as sign } from './sign.js';
-import { formatDate } from './src/lib/formatDate.js';
-import { formatName } from './src/lib/formatName.js';
+import { router as registration } from './registration.js';
 
 dotenv.config();
 
@@ -31,11 +29,34 @@ function isInvalid(field, errors) {
   return Boolean(errors.find((i) => i.param === field));
 }
 
+/**
+ * Hjálparfall sem skilar dagsetningu á lesanlegu formi.
+ *
+ * @param {string} sigDate dagsetning
+ * @returns {string} dagsetning sem hefur verið hreinsað
+ */
+function formatDate(sigDate) {
+  return ((sigDate.toISOString().substring(0, 10)).split('-')).reverse()
+    .join('.');
+}
+
+/**
+ * Hjálparfall til að birta nafn á réttu formi.
+ *
+ * @param {object} signature Undirskrift hlut
+ * @returns {string} Strengur sem inniheldur nafn ef ekki nafnlaust, annars Nafnlaust
+ */
+function formatName(signature) {
+  const sigName = signature.anonymous ? 'Nafnlaust' : signature.name;
+
+  return sigName;
+}
+
 app.locals.isInvalid = isInvalid;
 app.locals.formatDate = formatDate;
 app.locals.formatName = formatName;
 
-app.use('/', sign);
+app.use('/', registration);
 
 /**
  * @param {object} req Request hlutur
