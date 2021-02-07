@@ -1,0 +1,21 @@
+// Grunn layout stillingar:
+
+// Hámarks breidd fyrir efni síðu
+$max-width: 1200px;
+
+// Flest allt er sett upp í 12 dálka grind með 20px gutter
+$gutter: 20px;
+
+// Fyrir rows
+@mixin row() {
+  display: flex;
+  margin-left: -($gutter / 2);
+  margin-right: -($gutter / 2);
+}
+
+// Til að skilgreina breiddina á columns
+@mixin columns($col: 1) {
+  padding-left: $gutter / 2;
+  padding-right: $gutter / 2;
+  width: ($col / 12 * 100) * 1%;
+}

@@ -4,10 +4,14 @@
   "description": "Verkefni 2",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "setup": "node setup.js",
-    "eslint": "eslint *.js",
-    "test": "npm run eslint"
+    "eslint": "eslint *.js ./src/**/*.js",
+    "stylelint": "stylelint ./src/styles/*.scss --syntax scss",
+    "test": "concurrently npm:eslint npm:stylelint",
+    "sass": "node-sass --source-map-embed ./src/styles/styles.scss ./public/styles.css",
+    "sass-watch": "node-sass --source-map-embed --watch --recursive src/styles/styles.scss ./public/styles.css",
+    "start": "node app.js",
+    "demon": "nodemon app.js",
+    "dev": "concurrently npm:sass npm:sass-watch npm:demon"
   },
   "repository": {
     "type": "git",
@@ -24,9 +28,14 @@
     "xss": "^1.0.8"
   },
   "devDependencies": {
+    "concurrently": "^5.3.0",
     "eslint": "^7.18.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "nodemon": "^2.0.7"
+    "node-sass": "^5.0.0",
+    "nodemon": "^2.0.7",
+    "stylelint": "^13.9.0",
+    "stylelint-config-sass-guidelines": "^7.1.0",
+    "stylelint-config-standard": "^20.0.0"
   }
 }
