@@ -31,8 +31,6 @@ async function query(q, values = []) {
   } finally {
     client.release();
   }
-
-  await pool.end();
 }
 
 async function insert(data) {
