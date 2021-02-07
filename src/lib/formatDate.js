@@ -3,4 +3,4 @@ function formatDate(sigDate) {
     .join('.');
 }
 
-module.exports = formatDate;
+export { formatDate };

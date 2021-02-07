@@ -4,4 +4,4 @@ function formatName(signature) {
   return sigName;
 }
 
-module.exports = formatName;
+export { formatName };

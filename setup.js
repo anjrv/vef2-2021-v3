@@ -1,4 +1,6 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const fs = require('fs');
 const util = require('util');
@@ -19,8 +21,9 @@ async function query(q) {
 
     const { rows } = result;
     return rows;
-  } catch (err) {
-    throw err;
+  } catch (e) {
+    console.error('Error selecting', e);
+    throw e;
   } finally {
     await client.end();
   }

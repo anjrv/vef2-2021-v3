@@ -1,7 +1,7 @@
-const xss = require('xss');
-const express = require('express');
-const { body, validationResult } = require('express-validator');
-const { insert, select } = require('./db');
+import xss from 'xss';
+import express from 'express';
+import { body, validationResult } from 'express-validator';
+import { insert, select } from './db.js';
 
 function catchErrors(fn) {
   return (req, res, next) => fn(req, res, next).catch(next);
@@ -28,6 +28,9 @@ const validations = [
   body('name')
     .isLength({ min: 1 })
     .withMessage('Nafn má ekki vera tómt'),
+  body('name')
+    .isLength({ max: 128 })
+    .withMessage('Nafn má að hámarki vera 128 stafir'),
   body('nationalId')
     .isLength({ min: 1 })
     .withMessage('Kennitala má ekki vera tóm'),
@@ -135,4 +138,4 @@ router.post(
   catchErrors(formPost),
 );
 
-module.exports = router;
+export { router };

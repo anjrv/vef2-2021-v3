@@ -1,23 +1,27 @@
-require('dotenv').config();
+import express from 'express';
+import dotenv from 'dotenv';
+import path from 'path';
+import { router as sign } from './sign.js';
+import { formatDate } from './src/lib/formatDate.js';
+import { formatName } from './src/lib/formatName.js';
 
-const path = require('path');
-const express = require('express');
-const sign = require('./sign');
+dotenv.config();
 
-const formatDate = require('./src/lib/formatDate');
-const formatName = require('./src/lib/formatName');
+const {
+  PORT: port = 3000,
+} = process.env;
 
 const app = express();
+const dirname = path.resolve();
 
 app.use(express.urlencoded({ extended: true }));
-
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.locals.formatDate = formatDate;
 app.locals.formatName = formatName;
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(dirname, 'public')));
 
 function isInvalid(field, errors) {
   return Boolean(errors.find((i) => i.param === field));
@@ -38,9 +42,6 @@ function errorHandler(error, req, res, next) { // eslint-disable-line
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-const hostname = '127.0.0.1';
-const port = 3000;
-
-app.listen(port, hostname, () => {
-  console.info(`Server running at http://${hostname}:${port}/`);
+app.listen(port, () => {
+  console.info(`Server running at http://localhost:${port}/`);
 });

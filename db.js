@@ -1,21 +1,38 @@
-const { Client } = require('pg');
+import pg from 'pg';
+import dotenv from 'dotenv';
 
-const connectionString = process.env.DATABASE_URL;
+dotenv.config();
+
+const {
+  DATABASE_URL: connectionString,
+} = process.env;
+
+if (!connectionString) {
+  console.error('Vantar DATABASE_URL');
+  process.exit(1);
+}
+
+const pool = new pg.Pool({ connectionString });
+
+pool.on('error', (err) => {
+  console.error('Unexpected error on idle client', err);
+  process.exit(-1);
+});
 
 async function query(q, values = []) {
-  const client = new Client({ connectionString });
-
-  await client.connect();
+  const client = await pool.connect();
 
   try {
     const result = await client.query(q, values);
-
     return result;
-  } catch (err) {
-    throw err;
+  } catch (e) {
+    console.error('Error selecting', e);
+    throw (e);
   } finally {
-    await client.end();
+    client.release();
   }
+
+  await pool.end();
 }
 
 async function insert(data) {
@@ -35,7 +52,7 @@ async function select() {
   return result.rows;
 }
 
-module.exports = {
+export {
   insert,
   select,
 };

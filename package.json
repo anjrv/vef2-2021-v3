@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Verkefni 2",
   "main": "app.js",
+  "type" : "module",
   "scripts": {
     "eslint": "eslint *.js ./src/**/*.js",
     "stylelint": "stylelint ./src/styles/*.scss --syntax scss",
