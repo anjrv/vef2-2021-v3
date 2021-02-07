@@ -1,0 +1,72 @@
+.sign {
+  border-bottom: 2px dotted #c9ca9b;
+  text-align: center;
+
+  &__btn {
+    background-color: #fff;
+    border: 1px solid #c9ca9b;
+    border-radius: 5px;
+    font-size: 30px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    transition: 300ms ease-in-out;
+  }
+
+  &__btn:hover {
+    background-color: #c9ca9b;
+  }
+}
+
+.heading {
+  font-weight: 700;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.field {
+  display: flex;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  text-align: left;
+
+  &__label {
+    margin-top: 5px;
+    width: 100px;
+  }
+
+  &__input {
+    background-color: #fff;
+    border: 1px solid #c9ca9b;
+    border-radius: 3px;
+    flex-grow: 1;
+    padding: 5px;
+  }
+
+  &--invalid {
+    background-color: #ffb7b9;
+  }
+}
+
+.signatures {
+  &__table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+  }
+
+  &__heading,
+  &__col {
+    border: 1px solid #c9ca9b;
+    padding: 5px;
+  }
+}
+
+.error {
+  list-style-type: disc;
+  margin-bottom: 20px;
+  width: 50%;
+}

@@ -128,13 +128,9 @@ router.get('/', form);
 
 router.post(
   '/',
-  // Athugar hvort form sé í lagi
   validations,
-  // Ef form er ekki í lagi, birtir upplýsingar um það
   showErrors,
-  // Öll gögn í lagi, hreinsa þau
   sanitazions,
-  // Senda gögn í gagnagrunn
   catchErrors(formPost),
 );
 

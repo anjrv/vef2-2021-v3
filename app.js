@@ -18,9 +18,6 @@ app.use(express.urlencoded({ extended: true }));
 app.set('views', path.join(dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.locals.formatDate = formatDate;
-app.locals.formatName = formatName;
-
 app.use(express.static(path.join(dirname, 'public')));
 
 function isInvalid(field, errors) {
@@ -28,6 +25,9 @@ function isInvalid(field, errors) {
 }
 
 app.locals.isInvalid = isInvalid;
+app.locals.formatDate = formatDate;
+app.locals.formatName = formatName;
+
 app.use('/', sign);
 
 function notFoundHandler(req, res, next) { // eslint-disable-line
