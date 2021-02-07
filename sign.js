@@ -124,7 +124,7 @@ async function formPost(req, res) {
   return res.redirect('/');
 }
 
-router.get('/', form);
+router.get('/', catchErrors(form));
 
 router.post(
   '/',
