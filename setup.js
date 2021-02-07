@@ -1,20 +1,25 @@
 import dotenv from 'dotenv';
+import fs from 'fs';
+import util from 'util';
+import pg from 'pg';
 
 dotenv.config();
 
-const fs = require('fs');
-const util = require('util');
+const {
+  DATABASE_URL: connectionString,
+} = process.env;
 
-const { Client } = require('pg');
+if (!connectionString) {
+  console.error('Vantar DATABASE_URL');
+  process.exit(1);
+}
 
-const connectionString = process.env.DATABASE_URL;
+const pool = new pg.Pool({ connectionString });
 
 const readFileAsync = util.promisify(fs.readFile);
 
 async function query(q) {
-  const client = new Client({ connectionString });
-
-  await client.connect();
+  const client = await pool.connect();
 
   try {
     const result = await client.query(q);

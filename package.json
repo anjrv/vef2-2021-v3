@@ -10,6 +10,7 @@
     "test": "concurrently npm:eslint npm:stylelint",
     "sass": "node-sass --source-map-embed ./src/styles/styles.scss ./public/styles.css",
     "sass-watch": "node-sass --source-map-embed --watch --recursive src/styles/styles.scss ./public/styles.css",
+    "setup": "node setup.js",
     "start": "node app.js",
     "demon": "nodemon app.js",
     "dev": "concurrently npm:sass npm:sass-watch npm:demon"
