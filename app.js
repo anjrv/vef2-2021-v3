@@ -20,6 +20,13 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(dirname, 'public')));
 
+/**
+ * Hjálparfall til að athuga hvort reitur sé gildur eða ekki.
+ *
+ * @param {string} field Middleware sem grípa á villur fyrir
+ * @param {array} errors Fylki af villum frá express-validator pakkanum
+ * @returns {boolean} `true` ef `field` er í `errors`, `false` annars
+ */
 function isInvalid(field, errors) {
   return Boolean(errors.find((i) => i.param === field));
 }
@@ -30,10 +37,21 @@ app.locals.formatName = formatName;
 
 app.use('/', sign);
 
+/**
+ * @param {object} req Request hlutur
+ * @param {object} res Response hlutur
+ * @param {function} next Næsta middleware sem nota á
+ */
 function notFoundHandler(req, res, next) { // eslint-disable-line
   res.status(404).render('error', { title: '404', error: '404 fannst ekki' });
 }
 
+/**
+ * @param {object} err Villa sem kom upp í vinnslu
+ * @param {object} req Request hlutur
+ * @param {object} res Response hlutur
+ * @param {object} next næsta middleware sem nota á
+ */
 function errorHandler(error, req, res, next) { // eslint-disable-line
   console.error(error);
   res.status(500).render('error', { title: 'Villa', error });

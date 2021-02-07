@@ -1,5 +1,17 @@
 # Vef2 2021, verkefni 2
 
+[Heroku](https://vef2-2021-v2.herokuapp.com/).
+
+### Unnin af: Jaan Jaerving // JAJ20
+
+Keyrt með:
+* Setja `DATABASE_URL` í `.env`
+* `npm install` Til að sækja öll dependencies
+* `npm run setup` Til að setja upp gagnagrunn
+* `npm test` Keyrir eslint og stylelint
+* `npm start` Keyrir upp vefþjón á localhost porti 3000
+* `npm run dev` Keyrir nodemon ásamt Sass virkni
+
 [Kynning í fyrirlestri](https://youtu.be/).
 
 Verkefnið snýst um að útbúa einfaldan undirskriftarlista með skráningu og birtingu skráninga.

@@ -14,9 +14,9 @@ if (!connectionString) {
 
 const pool = new pg.Pool({
   connectionString,
-  ssl: { // Uncomment if pushing to heroku
-    rejectUnauthorized: false,
-  },
+  // ssl: { // Uncomment if pushing to heroku
+  //  rejectUnauthorized: false,
+  // },
 });
 
 pool.on('error', (err) => {
@@ -24,6 +24,14 @@ pool.on('error', (err) => {
   process.exit(-1);
 });
 
+/**
+ * Framkvæmir SQL fyrirspurn á gagnagrunn sem keyrir á `DATABASE_URL`,
+ * skilgreint í `.env`
+ *
+ * @param {string} q Query til að keyra
+ * @param {array} values Fylki af gildum fyrir query
+ * @returns {object} Hlut með niðurstöðu af því að keyra fyrirspurn
+ */
 async function query(q, values = []) {
   const client = await pool.connect();
 
@@ -38,6 +46,12 @@ async function query(q, values = []) {
   }
 }
 
+/**
+ * Bætir við undirskrift.
+ *
+ * @param {array} data Fylki af gögnum fyrir undirskrift
+ * @returns {object} Hlut með niðurstöðu af því að keyra fyrirspurn
+ */
 async function insert(data) {
   const q = `
 INSERT INTO signatures
@@ -49,6 +63,11 @@ VALUES
   return query(q, values);
 }
 
+/**
+ * Sækir allar undirskriftir
+ *
+ * @returns {array} Fylki af undirskriftum
+ */
 async function select() {
   const result = await query('SELECT * FROM signatures ORDER BY id');
 

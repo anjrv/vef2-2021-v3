@@ -18,6 +18,12 @@ const pool = new pg.Pool({ connectionString });
 
 const readFileAsync = util.promisify(fs.readFile);
 
+/**
+ * Framkvæmir SQL fyrirspurn á gagnagrunn sem keyrir á `DATABASE_URL`,
+ * skilgreint í `.env`
+ *
+ * @param {string} q Query til að keyra
+ */
 async function query(q) {
   const client = await pool.connect();
 
@@ -34,6 +40,9 @@ async function query(q) {
   }
 }
 
+/**
+ * Fall til að setja upp gagnagrunn
+ */
 async function main() {
   console.info(`Set upp gagnagrunn á ${connectionString}`);
   // droppa töflu ef til
