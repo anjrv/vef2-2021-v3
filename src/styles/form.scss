@@ -1,6 +1,5 @@
 .sign {
   border-bottom: 2px dotted #c9ca9b;
-  text-align: center;
 
   &__btn {
     background-color: #fff;
@@ -24,7 +23,6 @@
   font-weight: 700;
   margin-bottom: 20px;
   margin-top: 30px;
-  text-align: center;
 }
 
 .field {
@@ -62,6 +60,10 @@
   &__col {
     border: 1px solid #c9ca9b;
     padding: 5px;
+  }
+
+  &__col {
+    text-align: left;
   }
 }
 
