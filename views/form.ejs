@@ -12,7 +12,6 @@
       name="name"
       id="name"
       value="<%= name %>"
-      class=""
     />
   </div>
   <div class="field">
@@ -24,7 +23,6 @@
       name="nationalId"
       id="nationalId"
       value="<%= nationalId %>"
-      class=""
     />
   </div>
   <div class="field">
@@ -32,8 +30,7 @@
     <textarea class="field__input<%= locals.isInvalid('comment', errors) ? ' field--invalid' : '' %>" name="comment" id="comment"><%= comment %></textarea>
   </div>
   <div class="checkbox">
-    <input class="checkbox__box" type="checkbox" name="anonymous" <%= anonymous === 'checked' ? true :
-    false %>>
+    <input class="checkbox__box" type="checkbox" name="anonymous" <%= anonymous ? 'checked' : '' %> <%= anonymous === 'checked' ? true : false %>>
     <label class="checkbox__label" for="anonymous">Ekki birta nafn á lista</label>
   </div>
 
