@@ -14,9 +14,9 @@ if (!connectionString) {
 
 const pool = new pg.Pool({
   connectionString,
-  ssl: { // Uncomment if pushing to heroku
-    rejectUnauthorized: false,
-  },
+  // ssl: { // Uncomment if pushing to heroku
+  //   rejectUnauthorized: false,
+  // },
 });
 
 pool.on('error', (err) => {

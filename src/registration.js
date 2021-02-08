@@ -66,7 +66,7 @@ const sanitazions = [
   body('comment').trim().escape(),
   sanitizeXss('comment'),
 
-  body('anonymous').trim().escape(),
+  body('anonymous'),
   sanitizeXss('anonymous'),
 ];
 
