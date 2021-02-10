@@ -19,7 +19,7 @@ module.exports = {
     // Leyfum console.info, warn og error
     'no-console': ['error', { allow: ['info', 'warn', 'error'] }],
 
-    // Leyfum unused next í errorHandler
+    // Leyfum unused í errorHandler
     'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
   },
 };
