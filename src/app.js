@@ -63,8 +63,8 @@ app.use('/', registration);
  * @param {object} res Response hlutur
  * @param {function} next Næsta middleware sem nota á
  */
-function notFoundHandler(req, res, next) { // eslint-disable-line
-  res.status(404).render('error', { title: '404', error: '404 fannst ekki' });
+function notFoundHandler(_req, res, _next) {
+  res.status(404).render('error', { title: '404', error: '404 Fannst ekki' });
 }
 
 /**
@@ -73,7 +73,7 @@ function notFoundHandler(req, res, next) { // eslint-disable-line
  * @param {object} res Response hlutur
  * @param {object} next næsta middleware sem nota á
  */
-function errorHandler(error, req, res, next) { // eslint-disable-line
+function errorHandler(error, _req, res, _next) {
   console.error(error);
   res.status(500).render('error', { title: 'Villa', error });
 }
