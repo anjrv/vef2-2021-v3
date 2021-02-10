@@ -20,6 +20,6 @@ module.exports = {
     'no-console': ['error', { allow: ['info', 'warn', 'error'] }],
 
     // Leyfum unused next í errorHandler
-    'no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
+    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
   },
 };
