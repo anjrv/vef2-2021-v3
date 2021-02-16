@@ -71,7 +71,21 @@ async function select() {
   return result.rows;
 }
 
+async function count() {
+  const result = await query('SELECT COUNT(*) AS count FROM signatures');
+
+  return result;
+}
+
+async function deleteRow(id) {
+  const q = 'DELETE FROM applications WHERE id = $1';
+
+  return query(q, id);
+}
+
 export {
   insert,
   select,
+  count,
+  deleteRow,
 };

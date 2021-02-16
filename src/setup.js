@@ -2,12 +2,12 @@ import dotenv from 'dotenv';
 import fs from 'fs';
 import util from 'util';
 import pg from 'pg';
+import faker from 'faker';
+import { insert } from './db.js';
 
 dotenv.config();
 
-const {
-  DATABASE_URL: connectionString,
-} = process.env;
+const { DATABASE_URL: connectionString } = process.env;
 
 if (!connectionString) {
   console.error('Vantar DATABASE_URL');
@@ -29,7 +29,6 @@ async function query(q) {
 
   try {
     const result = await client.query(q);
-
     const { rows } = result;
     return rows;
   } catch (e) {
@@ -37,6 +36,22 @@ async function query(q) {
     throw e;
   } finally {
     await client.end();
+  }
+}
+
+/**
+ * Framkvæmir 500 gervi insert aðgerðir
+ */
+function insertDummies() {
+  console.info('Útbúa gerviskráningar ... ');
+  for (let i = 0; i < 500; i += 1) {
+    const data = {
+      name: faker.name.findName(),
+      nationalId: Math.random().toString().slice(2, 12),
+      comment: (Math.random() >= 0.5) ? faker.lorem.sentence() : '',
+      anonymous: (Math.random() >= 0.5),
+    };
+    insert(data);
   }
 }
 
@@ -54,6 +69,7 @@ async function main() {
     const createTable = await readFileAsync('./schema.sql');
     await query(createTable.toString('utf8'));
     console.info('Tafla búin til');
+    insertDummies();
   } catch (e) {
     console.error('Villa við að búa til töflu:', e.message);
   }
