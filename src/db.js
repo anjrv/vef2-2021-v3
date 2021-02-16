@@ -61,12 +61,12 @@ VALUES
 }
 
 /**
- * Sækir allar undirskriftir
+ * Sækir undirskriftir
  *
  * @returns {array} Fylki af undirskriftum
  */
-async function select() {
-  const result = await query('SELECT * FROM signatures ORDER BY id');
+async function select(offset, limit) {
+  const result = await query('SELECT * FROM signatures ORDER BY id OFFSET $1 LIMIT $2', [offset, limit]);
 
   return result.rows;
 }

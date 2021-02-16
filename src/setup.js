@@ -64,6 +64,9 @@ async function main() {
   await query('DROP TABLE IF EXISTS signatures');
   console.info('Töflu eytt');
 
+  await query('DROP TABLE IF EXISTS users');
+  console.info('Töflu eytt');
+
   // búa til töflu út frá skema
   try {
     const createTable = await readFileAsync('./schema.sql');

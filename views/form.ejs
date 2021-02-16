@@ -52,16 +52,16 @@
 
 <h2 class="heading">Undirskriftir</h2>
 
-  <% if (list.length === 0) { %>
+  <% if (list.items.length === 0) { %>
   <p>Engar undirskriftir.</p>
-  <% } %> <% if (list.length !== 0) { %>
+  <% } %> <% if (list.items.length !== 0) { %>
   <table class="signatures__table">
     <tr class="signatures__row">
       <th class="signatures__heading">Dags</th>
       <th class="signatures__heading">Nafn</th>
       <th class="signatures__heading">Athugasemd</th>
     </tr>
-    <% list.forEach((signature) => { %>
+    <% list.items.forEach((signature) => { %>
     <tr class="signatures__row">
       <td class="signatures__col"><%= formatDate(signature.signed) %></td>
       <td class="signatures__col"><%= formatName(signature) %></td>

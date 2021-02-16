@@ -1,7 +1,14 @@
 import xss from 'xss';
+import dotenv from 'dotenv';
 import express from 'express';
 import { body, validationResult } from 'express-validator';
 import { insert, select } from './db.js';
+
+dotenv.config();
+
+const {
+  PORT: port = 3000,
+} = process.env;
 
 /**
  * Higher-order fall sem umlykur async middleware með villumeðhöndlun.
@@ -78,7 +85,33 @@ const sanitazions = [
  * @returns {string} Formi fyrir undirskrift
  */
 async function form(req, res) {
-  const list = await select();
+  let { offset = 0, limit = 10 } = req.query;
+  offset = Number(offset);
+  limit = Number(limit);
+
+  const rows = await select(offset, limit);
+
+  const list = {
+    links: {
+      self: {
+        href: `http://localhost:${port}/?offset=${offset}&limit=${limit}`,
+      },
+    },
+    items: rows,
+  };
+
+  if (offset > 0) {
+    list.links.prev = {
+      href: `http://localhost:${port}/?offset=${offset - limit}&limit=${limit}`,
+    };
+  }
+
+  if (rows.length <= limit) {
+    list.links.next = {
+      href: `http://localhost:${port}/?offset=${Number(offset) + limit}&limit=${limit}`,
+    };
+  }
+
   const data = {
     title: 'Undirskriftarlisti',
     name: '',
@@ -101,7 +134,11 @@ async function form(req, res) {
  * @returns Næsta middleware ef í lagi, annars síðu með villum
  */
 async function showErrors(req, res, next) {
-  const list = await select();
+  let { offset = 0, limit = 10 } = req.query;
+  offset = Number(offset);
+  limit = Number(limit);
+
+  const list = await select(offset, limit);
   const {
     body: {
       name = '',
