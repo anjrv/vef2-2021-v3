@@ -27,14 +27,14 @@ VALUES
 }
 
 /**
- * Framkvæmir 500 gervi insert aðgerðir
+ * Framkvæmir 600 gervi insert aðgerðir
  */
 function insertDummies() {
   console.info('Útbúa gerviskráningar ... ');
   const date = new Date();
   const hi = date.getTime();
   const lo = hi - 1209600000;
-  for (let i = 0; i < 500; i += 1) {
+  for (let i = 0; i < 600; i += 1) {
     date.setTime(Math.floor(Math.random() * (hi - lo + 1) + lo));
     const data = {
       name: faker.name.findName(),
