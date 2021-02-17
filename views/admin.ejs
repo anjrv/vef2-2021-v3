@@ -38,10 +38,10 @@
 
   <div class="paging">
     <a <% if (typeof list.links.prev !== 'undefined') { %>
-      href="<%= list.links.prev.href %>" <% } %>>Fyrri síða</a>
-      <p>Síða <%= Math.floor((offset/limit)+1) %> af <%= Math.ceil(quant/limit) %></p>
+      href="/admin<%= list.links.prev.href %>" <% } %>>Fyrri síða</a>
+      <p>Síða <%= Math.floor((list.os/list.lim)+1) %> af <%= Math.ceil(quant/list.lim) %></p>
     <a <% if (typeof list.links.next !== 'undefined') { %>
-      href="<%= list.links.next.href %>" <% } %>>Næsta síða</a>
+      href="/admin<%= list.links.next.href %>" <% } %>>Næsta síða</a>
   </div>
   <% } %>
 </div>

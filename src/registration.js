@@ -2,7 +2,8 @@ import xss from 'xss';
 import express from 'express';
 
 import { body, validationResult } from 'express-validator';
-import { insert, select, count } from './db.js';
+import { insert, count } from './db.js';
+import { getPage } from './paging.js';
 
 /**
  * Higher-order fall sem umlykur async middleware með villumeðhöndlun.
@@ -79,32 +80,8 @@ const sanitazions = [
  * @returns {string} Formi fyrir undirskrift
  */
 async function form(req, res) {
-  let { offset = 0, limit = 50 } = req.query;
-  offset = Number(offset);
-  limit = Number(limit);
-  const rows = await select(offset, limit);
   const quant = await count();
-
-  const list = {
-    links: {
-      self: {
-        href: `/?offset=${offset}&limit=${limit}`,
-      },
-    },
-    items: rows,
-  };
-
-  if (offset > 0) {
-    list.links.prev = {
-      href: `/?offset=${offset - limit}&limit=${limit}`,
-    };
-  }
-
-  if (rows.length <= limit) {
-    list.links.next = {
-      href: `/?offset=${Number(offset) + limit}&limit=${limit}`,
-    };
-  }
+  const list = await getPage(req);
 
   const data = {
     title: 'Undirskriftarlisti',
@@ -115,8 +92,6 @@ async function form(req, res) {
     errors: [],
     list,
     quant,
-    offset,
-    limit,
   };
   return res.render('form', data);
 }
@@ -131,32 +106,8 @@ async function form(req, res) {
  * @returns Næsta middleware ef í lagi, annars síðu með villum
  */
 async function showErrors(req, res, next) {
-  let { offset = 0, limit = 50 } = req.query;
-  offset = Number(offset);
-  limit = Number(limit);
-  const rows = await select(offset, limit);
+  const list = await getPage(req);
   const quant = await count();
-
-  const list = {
-    links: {
-      self: {
-        href: `/?offset=${offset}&limit=${limit}`,
-      },
-    },
-    items: rows,
-  };
-
-  if (offset > 0) {
-    list.links.prev = {
-      href: `/?offset=${offset - limit}&limit=${limit}`,
-    };
-  }
-
-  if (rows.length <= limit) {
-    list.links.next = {
-      href: `/?offset=${Number(offset) + limit}&limit=${limit}`,
-    };
-  }
 
   const {
     body: {
@@ -174,8 +125,6 @@ async function showErrors(req, res, next) {
     anonymous,
     list,
     quant,
-    offset,
-    limit,
   };
 
   const validation = validationResult(req);

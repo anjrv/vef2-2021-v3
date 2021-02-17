@@ -3,7 +3,8 @@ import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { join, dirname } from 'path';
 
-import { count, select, deleteRow } from './db.js';
+import { getPage } from './paging.js';
+import { count, deleteRow } from './db.js';
 import { catchErrors, ensureLoggedIn } from './utils.js';
 
 dotenv.config();
@@ -20,40 +21,14 @@ router.use(express.static(join(path, '../public')));
  * @returns {string} Formi fyrir undirskrift
  */
 async function admin(req, res) {
-  let { offset = 0, limit = 50 } = req.query;
-  offset = Number(offset);
-  limit = Number(limit);
-  const rows = await select(offset, limit);
+  const list = await getPage(req);
   const quant = await count();
   const user = req.user.username;
-
-  const list = {
-    links: {
-      self: {
-        href: `/admin/?offset=${offset}&limit=${limit}`,
-      },
-    },
-    items: rows,
-  };
-
-  if (offset > 0) {
-    list.links.prev = {
-      href: `/admin/?offset=${offset - limit}&limit=${limit}`,
-    };
-  }
-
-  if (rows.length <= limit) {
-    list.links.next = {
-      href: `/admin/?offset=${Number(offset) + limit}&limit=${limit}`,
-    };
-  }
 
   const data = {
     title: 'Undirskriftarlisti',
     list,
     quant,
-    offset,
-    limit,
     user,
   };
   return res.render('admin', data);
