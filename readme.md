@@ -6,13 +6,14 @@
 
 Keyrt með:
 * Setja `DATABASE_URL` í `.env`
+* Setja `SESSION_SECRET` í `.env`
 * `npm install` Til að sækja öll dependencies
 * `npm run setup` Til að setja upp gagnagrunn og búa til gervigögn
 * `npm test` Keyrir eslint og stylelint
 * `npm start` Keyrir upp vefþjón á localhost porti 3000
 * `npm run dev` Keyrir nodemon ásamt Sass virkni
 
-Hægt er að logga inn sem admin með:
+Hægt er að skrá inn sem admin:
 * Notendanafn: admin
 * Lykilorð: 123
 

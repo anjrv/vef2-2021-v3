@@ -1,0 +1,54 @@
+.signatures {
+  &__table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  &__heading,
+  &__col {
+    border: 1px solid #c9ca9b;
+    padding: 5px;
+  }
+
+  &__col {
+    text-align: left;
+  }
+}
+
+.error {
+  list-style-type: none;
+  margin-bottom: 20px;
+  width: 50%;
+}
+
+.paging {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.admin {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.delete {
+  background-color: #fff;
+  border: 1px solid #c9ca9b;
+  border-radius: 5px;
+  font-weight: 700;
+  padding: 10px;
+
+  &:hover {
+    background-color: #c9ca9b;
+    transition: 300ms ease-in-out;
+  }
+}
+
+.back {
+  margin-top: 10px;
+  text-align: left;
+}
