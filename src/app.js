@@ -6,6 +6,7 @@ import { Strategy } from 'passport-local';
 import { fileURLToPath } from 'url';
 import { join, dirname } from 'path';
 
+import { router as admin } from './admin.js';
 import { router as registration } from './registration.js';
 import { userStrategy, serializeUser, deserializeUser } from './users.js';
 
@@ -82,16 +83,20 @@ app.locals.isInvalid = isInvalid;
 app.locals.formatDate = formatDate;
 app.locals.formatName = formatName;
 
+app.use('/', registration);
+app.use('/admin', admin);
+
 app.use((req, res, next) => {
-  // Látum `users` alltaf vera til fyrir view
-  res.locals.user = req.isAuthenticated() ? req.user : null;
+  if (req.isAuthenticated()) {
+    res.locals.user = req.user;
+  }
 
   next();
 });
 
 app.get('/login', (req, res) => {
   if (req.isAuthenticated()) {
-    return res.redirect('/');
+    return res.redirect('/admin');
   }
 
   let message = '';
@@ -113,7 +118,7 @@ app.post(
   }),
 
   (req, res) => {
-    res.redirect('/');
+    res.redirect('/admin');
   },
 );
 
@@ -121,8 +126,6 @@ app.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });
-
-app.use('/', registration);
 
 /**
  * @param {object} req Request hlutur

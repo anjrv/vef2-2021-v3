@@ -66,7 +66,7 @@ VALUES
  * @returns {array} Fylki af undirskriftum
  */
 async function select(offset, limit) {
-  const result = await query('SELECT * FROM signatures ORDER BY id OFFSET $1 LIMIT $2', [offset, limit]);
+  const result = await query('SELECT * FROM signatures ORDER BY signed OFFSET $1 LIMIT $2', [offset, limit]);
 
   return result.rows;
 }
@@ -74,11 +74,11 @@ async function select(offset, limit) {
 async function count() {
   const result = await query('SELECT COUNT(*) AS count FROM signatures');
 
-  return result;
+  return result.rows[0].count;
 }
 
 async function deleteRow(id) {
-  const q = 'DELETE FROM applications WHERE id = $1';
+  const q = 'DELETE FROM signatures WHERE id = $1';
 
   return query(q, id);
 }

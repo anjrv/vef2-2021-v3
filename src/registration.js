@@ -1,7 +1,7 @@
 import xss from 'xss';
 import express from 'express';
 import { body, validationResult } from 'express-validator';
-import { insert, select } from './db.js';
+import { insert, select, count } from './db.js';
 
 /**
  * Higher-order fall sem umlykur async middleware með villumeðhöndlun.
@@ -79,6 +79,7 @@ const sanitazions = [
  */
 async function form(req, res) {
   const list = await select();
+  const quant = await count();
   const data = {
     title: 'Undirskriftarlisti',
     name: '',
@@ -87,8 +88,9 @@ async function form(req, res) {
     anonymous: false,
     errors: [],
     list,
+    quant,
   };
-  res.render('form', data);
+  return res.render('form', data);
 }
 
 /**
@@ -102,6 +104,7 @@ async function form(req, res) {
  */
 async function showErrors(req, res, next) {
   const list = await select();
+  const quant = await count();
   const {
     body: {
       name = '',
@@ -117,6 +120,7 @@ async function showErrors(req, res, next) {
     comment,
     anonymous,
     list,
+    quant,
   };
 
   const validation = validationResult(req);

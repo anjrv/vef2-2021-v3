@@ -1,0 +1,41 @@
+<%- include('header') -%>
+
+<h1 class="heading">Undirskriftarlisti - umsjón</h1>
+
+<div class="admin">
+  <p class="admin__info">Innskráður sem: <strong><%= user %></p>
+  <a class="admin__logout" href="/logout">Útskrá</a>
+</div>
+
+<div class="signatures">
+  <h2 class="heading">Undirskriftir</h2>
+
+  <% if (list.length === 0) { %>
+  <p>Engar undirskriftir.</p>
+  <% } %> <% if (list.length !== 0) { %>
+  <p>Fjöldi undirskrifta: <%= quant %></p>
+  <table class="signatures__table">
+    <tr class="signatures__row">
+      <th class="signatures__heading">Dags</th>
+      <th class="signatures__heading">Nafn</th>
+      <th class="signatures__heading">Athugasemd</th>
+      <th class="signatures__heading">Eyða</th>
+    </tr>
+    <% list.forEach((signature) => { %>
+    <tr class="signatures__row">
+      <td class="signatures__col"><%= formatDate(signature.signed) %></td>
+      <td class="signatures__col"><%= formatName(signature) %></td>
+      <td class="signatures__col"><%= signature.comment %></td>
+      <td class="signatures__heading">
+        <form method="post" action="/admin/delete">
+          <input type="hidden" name="id" value="<%= signature.id %>" />
+          <button class="delete">Eyða</button>
+        </form>
+      </td>
+    </tr>
+    <% }); %>
+  </table>
+  <% } %>
+</div>
+
+<%- include('footer') -%>

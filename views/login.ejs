@@ -11,13 +11,18 @@
     <label class="field__label">Lykilorð:</label>
     <input class="field__input type="password" name="password">
   </div>
+
   <button class="sign__btn">Innskrá</button>
 
   <% if (message) { %>
-    <div class="error">
-      <p class="error__label"><%= message %></p>
-    </div>
+  <div class="error">
+    <p><%= message %></p>
+  </div>
   <% } %>
 </form>
+
+<div class="back">
+  <a href="/">Til baka</a>
+</div>
 
 <%- include('footer') -%>

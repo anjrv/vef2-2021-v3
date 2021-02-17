@@ -1,4 +1,4 @@
-const xss = require('xss');
+import xss from 'xss';
 
 /**
  * Higher-order fall sem umlykur async middleware með villumeðhöndlun.
@@ -27,22 +27,6 @@ function ensureLoggedIn(req, res, next) {
 }
 
 /**
- * Passar upp á að innskráður notandi sé admin. Skilar næsta middleware ef svo
- * er, annars redirect á /login
- *
- * @param {object} req Request hlutur
- * @param {object} res Response hlutur
- * @param {funcion} next Næsta middleware
- */
-function ensureAdmin(req, res, next) {
-  if (req.isAuthenticated() && req.user && req.user.admin) {
-    return next();
-  }
-
-  return res.redirect('/login');
-}
-
-/**
  * Hjálparfall sem XSS hreinsar reit í formi eftir heiti.
  *
  * @param {string} fieldName Heiti á reit
@@ -64,9 +48,8 @@ function sanitizeXss(fieldName) {
   };
 }
 
-module.exports = {
+export {
   catchErrors,
   ensureLoggedIn,
-  ensureAdmin,
   sanitizeXss,
 };

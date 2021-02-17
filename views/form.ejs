@@ -27,11 +27,20 @@
   </div>
   <div class="field">
     <label class="field__label" for="comment">Athugasemd:</label>
-    <textarea class="field__input<%= locals.isInvalid('comment', errors) ? ' field--invalid' : '' %>" name="comment" id="comment"><%= comment %></textarea>
+    <textarea
+      class="field__input<%= locals.isInvalid('comment', errors) ? ' field--invalid' : '' %>"
+      name="comment"
+      id="comment"
+    >
+<%= comment %></textarea
+    >
   </div>
   <div class="checkbox">
-    <input class="checkbox__box" type="checkbox" name="anonymous" <%= anonymous ? 'checked' : '' %> <%= anonymous === 'checked' ? true : false %>>
-    <label class="checkbox__label" for="anonymous">Ekki birta nafn á lista</label>
+    <input class="checkbox__box" type="checkbox" name="anonymous" <%= anonymous
+    ? 'checked' : '' %> <%= anonymous === 'checked' ? true : false %>>
+    <label class="checkbox__label" for="anonymous"
+      >Ekki birta nafn á lista</label
+    >
   </div>
 
   <% if (errors.length > 0) { %>
@@ -39,7 +48,9 @@
   <ul class="error">
     <% errors.forEach((error) => { %>
     <li class="error__item">
-      <label class="error__label" for="<%= error.param %>"><%= error.msg %></label>
+      <label class="error__label" for="<%= error.param %>"
+        ><%= error.msg %></label
+      >
     </li>
     <% }); %>
   </ul>
@@ -49,12 +60,12 @@
 </form>
 
 <div class="signatures">
-
-<h2 class="heading">Undirskriftir</h2>
+  <h2 class="heading">Undirskriftir</h2>
 
   <% if (list.length === 0) { %>
   <p>Engar undirskriftir.</p>
   <% } %> <% if (list.length !== 0) { %>
+  <p>Fjöldi undirskrifta: <%= quant %></p>
   <table class="signatures__table">
     <tr class="signatures__row">
       <th class="signatures__heading">Dags</th>
