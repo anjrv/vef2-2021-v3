@@ -6,16 +6,15 @@ import { join, dirname } from 'path';
 import { count, select, deleteRow } from './db.js';
 import { catchErrors, ensureLoggedIn } from './utils.js';
 
-const router = express.Router();
-
 dotenv.config();
+
+const router = express.Router();
+const path = dirname(fileURLToPath(import.meta.url));
+router.use(express.static(join(path, '../public')));
 
 const {
   PORT: port = 3000,
 } = process.env;
-
-//const path = dirname(fileURLToPath(import.meta.url));
-//router.use(express.static(join(path, '../public')));
 
 /**
  * Route handler fyrir form undirskrifts
