@@ -1,6 +1,5 @@
 import xss from 'xss';
 import express from 'express';
-import dotenv from 'dotenv';
 
 import { body, validationResult } from 'express-validator';
 import { insert, select, count } from './db.js';
@@ -35,12 +34,6 @@ function sanitizeXss(fieldName) {
     next();
   };
 }
-
-dotenv.config();
-
-const {
-  PORT: port = 3000,
-} = process.env;
 
 const router = express.Router();
 
@@ -95,7 +88,7 @@ async function form(req, res) {
   const list = {
     links: {
       self: {
-        href: `http://localhost:${port}/?offset=${offset}&limit=${limit}`,
+        href: `/?offset=${offset}&limit=${limit}`,
       },
     },
     items: rows,
@@ -103,13 +96,13 @@ async function form(req, res) {
 
   if (offset > 0) {
     list.links.prev = {
-      href: `http://localhost:${port}/?offset=${offset - limit}&limit=${limit}`,
+      href: `/?offset=${offset - limit}&limit=${limit}`,
     };
   }
 
   if (rows.length <= limit) {
     list.links.next = {
-      href: `http://localhost:${port}/?offset=${Number(offset) + limit}&limit=${limit}`,
+      href: `/?offset=${Number(offset) + limit}&limit=${limit}`,
     };
   }
 
@@ -147,7 +140,7 @@ async function showErrors(req, res, next) {
   const list = {
     links: {
       self: {
-        href: `http://localhost:${port}/?offset=${offset}&limit=${limit}`,
+        href: `/?offset=${offset}&limit=${limit}`,
       },
     },
     items: rows,
@@ -155,13 +148,13 @@ async function showErrors(req, res, next) {
 
   if (offset > 0) {
     list.links.prev = {
-      href: `http://localhost:${port}/?offset=${offset - limit}&limit=${limit}`,
+      href: `/?offset=${offset - limit}&limit=${limit}`,
     };
   }
 
   if (rows.length <= limit) {
     list.links.next = {
-      href: `http://localhost:${port}/?offset=${Number(offset) + limit}&limit=${limit}`,
+      href: `/?offset=${Number(offset) + limit}&limit=${limit}`,
     };
   }
 

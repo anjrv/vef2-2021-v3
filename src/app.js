@@ -28,7 +28,6 @@ app.use(session({
   secret: sessionSecret,
   resave: false,
   saveUninitialized: false,
-  //maxAge: 30 * 24 * 60 * 1000,
 }));
 
 passport.use(new Strategy(userStrategy));

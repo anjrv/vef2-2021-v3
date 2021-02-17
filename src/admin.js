@@ -12,10 +12,6 @@ const router = express.Router();
 const path = dirname(fileURLToPath(import.meta.url));
 router.use(express.static(join(path, '../public')));
 
-const {
-  PORT: port = 3000,
-} = process.env;
-
 /**
  * Route handler fyrir form undirskrifts
  *
@@ -34,7 +30,7 @@ async function admin(req, res) {
   const list = {
     links: {
       self: {
-        href: `http://localhost:${port}/admin/?offset=${offset}&limit=${limit}`,
+        href: `/admin/?offset=${offset}&limit=${limit}`,
       },
     },
     items: rows,
@@ -42,13 +38,13 @@ async function admin(req, res) {
 
   if (offset > 0) {
     list.links.prev = {
-      href: `http://localhost:${port}/admin/?offset=${offset - limit}&limit=${limit}`,
+      href: `/admin/?offset=${offset - limit}&limit=${limit}`,
     };
   }
 
   if (rows.length <= limit) {
     list.links.next = {
-      href: `http://localhost:${port}/admin/?offset=${Number(offset) + limit}&limit=${limit}`,
+      href: `/admin/?offset=${Number(offset) + limit}&limit=${limit}`,
     };
   }
 
