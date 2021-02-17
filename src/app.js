@@ -83,9 +83,6 @@ app.locals.isInvalid = isInvalid;
 app.locals.formatDate = formatDate;
 app.locals.formatName = formatName;
 
-app.use('/', registration);
-app.use('/admin', admin);
-
 app.use((req, res, next) => {
   if (req.isAuthenticated()) {
     res.locals.user = req.user;
@@ -126,6 +123,9 @@ app.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });
+
+app.use('/', registration);
+app.use('/admin', admin);
 
 /**
  * @param {object} req Request hlutur

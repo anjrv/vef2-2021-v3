@@ -65,8 +65,8 @@ VALUES
  *
  * @returns {array} Fylki af undirskriftum
  */
-async function select(offset, limit) {
-  const result = await query('SELECT * FROM signatures ORDER BY signed OFFSET $1 LIMIT $2', [offset, limit]);
+async function select(offset = 0, limit = 50) {
+  const result = await query('SELECT * FROM signatures ORDER BY signed DESC OFFSET $1 LIMIT $2', [offset, limit]);
 
   return result.rows;
 }

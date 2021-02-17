@@ -1,9 +1,16 @@
 import express from 'express';
+import dotenv from 'dotenv';
 
 import { count, select, deleteRow } from './db.js';
 import { catchErrors, ensureLoggedIn } from './utils.js';
 
 const router = express.Router();
+
+dotenv.config();
+
+const {
+  PORT: port = 3000,
+} = process.env;
 
 /**
  * Route handler fyrir form undirskrifts
@@ -13,14 +20,40 @@ const router = express.Router();
  * @returns {string} Formi fyrir undirskrift
  */
 async function admin(req, res) {
-  const list = await select();
+  let { offset = 0, limit = 50 } = req.query;
+  offset = Number(offset);
+  limit = Number(limit);
+  const rows = await select(offset, limit);
   const quant = await count();
   const user = req.user.username;
+
+  const list = {
+    links: {
+      self: {
+        href: `http://localhost:${port}/admin/?offset=${offset}&limit=${limit}`,
+      },
+    },
+    items: rows,
+  };
+
+  if (offset > 0) {
+    list.links.prev = {
+      href: `http://localhost:${port}/admin/?offset=${offset - limit}&limit=${limit}`,
+    };
+  }
+
+  if (rows.length <= limit) {
+    list.links.next = {
+      href: `http://localhost:${port}/admin/?offset=${Number(offset) + limit}&limit=${limit}`,
+    };
+  }
 
   const data = {
     title: 'Undirskriftarlisti',
     list,
     quant,
+    offset,
+    limit,
     user,
   };
   return res.render('admin', data);

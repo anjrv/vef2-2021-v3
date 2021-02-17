@@ -10,9 +10,9 @@
 <div class="signatures">
   <h2 class="heading">Undirskriftir</h2>
 
-  <% if (list.length === 0) { %>
+  <% if (list.items.length === 0) { %>
   <p>Engar undirskriftir.</p>
-  <% } %> <% if (list.length !== 0) { %>
+  <% } %> <% if (list.items.length !== 0) { %>
   <p>Fjöldi undirskrifta: <%= quant %></p>
   <table class="signatures__table">
     <tr class="signatures__row">
@@ -21,7 +21,7 @@
       <th class="signatures__heading">Athugasemd</th>
       <th class="signatures__heading">Eyða</th>
     </tr>
-    <% list.forEach((signature) => { %>
+    <% list.items.forEach((signature) => { %>
     <tr class="signatures__row">
       <td class="signatures__col"><%= formatDate(signature.signed) %></td>
       <td class="signatures__col"><%= formatName(signature) %></td>
@@ -35,6 +35,14 @@
     </tr>
     <% }); %>
   </table>
+
+  <div class="paging">
+    <a <% if (typeof list.links.prev !== 'undefined') { %>
+      href="<%= list.links.prev.href %>" <% } %>>Fyrri síða</a>
+      <p>Síða <%= Math.floor((offset/limit)+1) %> af <%= Math.ceil(quant/limit) %></p>
+    <a <% if (typeof list.links.next !== 'undefined') { %>
+      href="<%= list.links.next.href %>" <% } %>>Næsta síða</a>
+  </div>
   <% } %>
 </div>
 
