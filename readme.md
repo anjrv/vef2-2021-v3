@@ -12,6 +12,10 @@ Keyrt með:
 * `npm start` Keyrir upp vefþjón á localhost porti 3000
 * `npm run dev` Keyrir nodemon ásamt Sass virkni
 
+Hægt er að logga inn sem admin með:
+* Notendanafn: admin
+* Lykilorð: 123
+
 Framhald af [verkefni 2](https://github.com/vefforritun/vef2-2021-v2).
 
 [Vídeó yfirferð](https://youtu.be/GW-mbrG5dEs).
