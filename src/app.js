@@ -5,6 +5,7 @@ import passport from 'passport';
 import { Strategy } from 'passport-local';
 import { fileURLToPath } from 'url';
 import { join, dirname } from 'path';
+
 import { router as registration } from './registration.js';
 import { userStrategy, serializeUser, deserializeUser } from './users.js';
 
@@ -12,16 +13,34 @@ dotenv.config();
 
 const {
   PORT: port = 3000,
+  SESSION_SECRET: sessionSecret,
 } = process.env;
+
+if (!sessionSecret) {
+  console.error('Add SESSION_SECRET to .env');
+  process.exit(1);
+}
 
 const app = express();
 
+app.use(session({
+  secret: sessionSecret,
+  resave: false,
+  saveUninitialized: false,
+  maxAge: 30 * 24 * 60 * 1000,
+}));
+
+passport.use(new Strategy(userStrategy));
+passport.serializeUser(serializeUser);
+passport.deserializeUser(deserializeUser);
+
 app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 const path = dirname(fileURLToPath(import.meta.url));
 
 app.use(express.static(join(path, '../public')));
-
 app.set('views', join(path, '../views'));
 app.set('view engine', 'ejs');
 
@@ -62,6 +81,46 @@ function formatName(signature) {
 app.locals.isInvalid = isInvalid;
 app.locals.formatDate = formatDate;
 app.locals.formatName = formatName;
+
+app.use((req, res, next) => {
+  // Látum `users` alltaf vera til fyrir view
+  res.locals.user = req.isAuthenticated() ? req.user : null;
+
+  next();
+});
+
+app.get('/login', (req, res) => {
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+
+  let message = '';
+
+  if (req.session.messages && req.session.messages.length > 0) {
+    message = req.session.messages.join(', ');
+    req.session.messages = [];
+  }
+
+  return res.render('login', { page: 'login', title: 'Innskráning', message });
+});
+
+app.post(
+  '/login',
+
+  passport.authenticate('local', {
+    failureMessage: 'Notandi eða lykilorð vitlaust.',
+    failureRedirect: '/login',
+  }),
+
+  (req, res) => {
+    res.redirect('/');
+  },
+);
+
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
 
 app.use('/', registration);
 

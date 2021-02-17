@@ -1,0 +1,23 @@
+<%- include('header') -%>
+
+<h1 class="heading">Innskráning</h1>
+
+<form class="sign" method="post" action="/login">
+  <div class="field">
+    <label class="field__label">Notendanafn:</label>
+    <input class="field__input type="text" name="username">
+  </div>
+  <div class="field">
+    <label class="field__label">Lykilorð:</label>
+    <input class="field__input type="password" name="password">
+  </div>
+  <button class="sign__btn">Innskrá</button>
+
+  <% if (message) { %>
+    <div class="error">
+      <p class="error__label"><%= message %></p>
+    </div>
+  <% } %>
+</form>
+
+<%- include('footer') -%>
