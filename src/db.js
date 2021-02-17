@@ -84,6 +84,7 @@ async function deleteRow(id) {
 }
 
 export {
+  query,
   insert,
   select,
   count,

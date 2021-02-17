@@ -1,7 +1,12 @@
 import express from 'express';
+import session from 'express-session';
 import dotenv from 'dotenv';
-import path from 'path';
+import passport from 'passport';
+import { Strategy } from 'passport-local';
+import { fileURLToPath } from 'url';
+import { join, dirname } from 'path';
 import { router as registration } from './registration.js';
+import { userStrategy, serializeUser, deserializeUser } from './users.js';
 
 dotenv.config();
 
@@ -10,13 +15,15 @@ const {
 } = process.env;
 
 const app = express();
-const dirname = path.resolve();
 
 app.use(express.urlencoded({ extended: true }));
-app.set('views', path.join(dirname, 'views'));
-app.set('view engine', 'ejs');
 
-app.use(express.static(path.join(dirname, 'public')));
+const path = dirname(fileURLToPath(import.meta.url));
+
+app.use(express.static(join(path, '../public')));
+
+app.set('views', join(path, '../views'));
+app.set('view engine', 'ejs');
 
 /**
  * Hjálparfall til að athuga hvort reitur sé gildur eða ekki.

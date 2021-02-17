@@ -1,9 +1,8 @@
 import dotenv from 'dotenv';
 import fs from 'fs';
 import util from 'util';
-import pg from 'pg';
 import faker from 'faker';
-import { insert } from './db.js';
+import { query } from './db.js';
 
 dotenv.config();
 
@@ -14,29 +13,17 @@ if (!connectionString) {
   process.exit(1);
 }
 
-const pool = new pg.Pool({ connectionString });
-
 const readFileAsync = util.promisify(fs.readFile);
 
-/**
- * Framkvæmir SQL fyrirspurn á gagnagrunn sem keyrir á `DATABASE_URL`,
- * skilgreint í `.env`
- *
- * @param {string} q Query til að keyra
- */
-async function query(q) {
-  const client = await pool.connect();
+async function insert(data) {
+  const q = `
+INSERT INTO signatures
+(name, nationalId, comment, anonymous, signed)
+VALUES
+($1, $2, $3, $4, $5)`;
+  const values = [data.name, data.nationalId, data.comment, data.anonymous, data.signed];
 
-  try {
-    const result = await client.query(q);
-    const { rows } = result;
-    return rows;
-  } catch (e) {
-    console.error('Error selecting', e);
-    throw e;
-  } finally {
-    await client.end();
-  }
+  return query(q, values);
 }
 
 /**
@@ -44,12 +31,17 @@ async function query(q) {
  */
 function insertDummies() {
   console.info('Útbúa gerviskráningar ... ');
+  const date = new Date();
+  const hi = date.getTime();
+  const lo = hi - 1209600000;
   for (let i = 0; i < 500; i += 1) {
+    date.setTime(Math.floor(Math.random() * (hi - lo + 1) + lo));
     const data = {
       name: faker.name.findName(),
       nationalId: Math.random().toString().slice(2, 12),
       comment: (Math.random() >= 0.5) ? faker.lorem.sentence() : '',
       anonymous: (Math.random() >= 0.5),
+      signed: date.toLocaleString(),
     };
     insert(data);
   }
