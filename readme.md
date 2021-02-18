@@ -2,6 +2,8 @@
 
 [Heroku](https://vef2-2021-v3.herokuapp.com/).
 
+Fork af [verkefni 2](https://github.com/anjrv/vef2-2021-v2).
+
 ### Unnin af: Jaan Jaerving // JAJ20
 
 Keyrt með:
