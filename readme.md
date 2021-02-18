@@ -19,6 +19,8 @@ Hægt er að skrá inn sem admin:
 * Notendanafn: admin
 * Lykilorð: 123
 
+# Verkefnislýsing
+
 Framhald af [verkefni 2](https://github.com/vefforritun/vef2-2021-v2).
 
 [Vídeó yfirferð](https://youtu.be/GW-mbrG5dEs).
