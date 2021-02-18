@@ -14,11 +14,11 @@ const path = dirname(fileURLToPath(import.meta.url));
 router.use(express.static(join(path, '../public')));
 
 /**
- * Route handler fyrir form undirskrifts
+ * Route handler fyrir admin síðu
  *
  * @param {object} req Request hlutur
  * @param {object} res Response hlutur
- * @returns {string} Formi fyrir undirskrift
+ * @returns {string} Síða fyrir umsjón
  */
 async function admin(req, res) {
   const list = await getPage(req);
@@ -35,8 +35,8 @@ async function admin(req, res) {
 }
 
 /**
- * Route til að eyða umsókn, tekur við `id` í `body` og eyðir.
- * Aðeins aðgengilegt fyrir admin.
+ * Route til að eyða undirskrift, tekur við `id` í `body` og eyðir.
+ * Aðeins aðgengilegt fyrir notanda sem er skráður inn.
  *
  * @param {object} req Request hlutur
  * @param {object} res Response hlutur

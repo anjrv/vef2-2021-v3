@@ -1,4 +1,6 @@
 .signatures {
+  font-weight: 100;
+
   &__table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -13,6 +15,7 @@
   }
 
   &__col {
+    font-weight: 100;
     text-align: left;
   }
 }
@@ -33,6 +36,10 @@
 .admin {
   margin-top: 20px;
   text-align: left;
+
+  &__info {
+    margin-bottom: 5px;
+  }
 }
 
 .delete {

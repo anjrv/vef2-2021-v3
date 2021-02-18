@@ -13,7 +13,7 @@
   <% if (list.items.length === 0) { %>
   <p>Engar undirskriftir.</p>
   <% } %> <% if (list.items.length !== 0) { %>
-  <p>Fjöldi undirskrifta: <%= quant %></p>
+  <p>Fjöldi undirskrifta: <%= list.count %></p>
   <table class="signatures__table">
     <tr class="signatures__row">
       <th class="signatures__heading">Dags</th>
@@ -39,7 +39,7 @@
   <div class="paging">
     <a <% if (typeof list.links.prev !== 'undefined') { %>
       href="/admin<%= list.links.prev.href %>" <% } %>>Fyrri síða</a>
-      <p>Síða <%= Math.floor((list.os/list.lim)+1) %> af <%= Math.ceil(quant/list.lim) %></p>
+      <p>Síða <%= list.curr %> af <%= list.total %></p>
     <a <% if (typeof list.links.next !== 'undefined') { %>
       href="/admin<%= list.links.next.href %>" <% } %>>Næsta síða</a>
   </div>

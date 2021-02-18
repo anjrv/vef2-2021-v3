@@ -61,9 +61,10 @@ VALUES
 }
 
 /**
- * Sækir undirskriftir
+ * Sækir 50 undirskriftir miðað við offset og limit.
  *
- * @returns {array} Fylki af undirskriftum
+ * @param {*} offset Byrjunarstað
+ * @param {*} limit Fjöldi
  */
 async function select(offset = 0, limit = 50) {
   const result = await query('SELECT * FROM signatures ORDER BY signed DESC OFFSET $1 LIMIT $2', [offset, limit]);
@@ -71,12 +72,20 @@ async function select(offset = 0, limit = 50) {
   return result.rows;
 }
 
+/**
+ * Sækir heildarfjölda undirskrifta
+ */
 async function count() {
   const result = await query('SELECT COUNT(*) AS count FROM signatures');
 
   return result.rows[0].count;
 }
 
+/**
+ * Eyðir undirskrift frá gagnagrunni.
+ *
+ * @param {*} id id færslu sem eyða á
+ */
 async function deleteRow(id) {
   const q = 'DELETE FROM signatures WHERE id = $1';
 
