@@ -29,12 +29,13 @@
 .paging {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
   margin-top: 10px;
 }
 
 .admin {
+  border-bottom: 2px dotted #c9ca9b;
   margin-top: 20px;
+  padding-bottom: 20px;
   text-align: left;
 
   &__info {
