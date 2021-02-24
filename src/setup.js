@@ -30,15 +30,23 @@ VALUES
  * Framkvæmir 600 gervi insert aðgerðir
  */
 function insertDummies() {
-  console.info('Útbúa gerviskráningar ... ');
   const date = new Date();
   const hi = date.getTime();
   const lo = hi - 1209600000;
+  const nationalIds = new Set();
   for (let i = 0; i < 600; i += 1) {
     date.setTime(Math.floor(Math.random() * (hi - lo + 1) + lo));
+    let id = Math.random().toString().slice(2, 12);
+
+    // Reikna ID aftur ef það er nú þegar til
+    while (nationalIds.has(id)) {
+      id = Math.random().toString().slice(2, 12);
+    }
+    nationalIds.add(id);
+
     const data = {
       name: faker.name.findName(),
-      nationalId: Math.random().toString().slice(2, 12),
+      nationalId: id,
       comment: (Math.random() >= 0.5) ? faker.lorem.sentence() : '',
       anonymous: (Math.random() >= 0.5),
       signed: date.toLocaleString(),
@@ -64,6 +72,7 @@ async function main() {
     const createTable = await readFileAsync('./schema.sql');
     await query(createTable.toString('utf8'));
     console.info('Tafla búin til');
+    console.info('Útbúa gerviskráningar ... ');
     insertDummies();
   } catch (e) {
     console.error('Villa við að búa til töflu:', e.message);
