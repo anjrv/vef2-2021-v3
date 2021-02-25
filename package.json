@@ -1,7 +1,7 @@
 {
-  "name": "vef2-2021-v2",
+  "name": "vef2-2021-v3",
   "version": "1.0.0",
-  "description": "Verkefni 2",
+  "description": "Verkefni 3",
   "main": "app.js",
   "scripts": {
     "eslint": "eslint *.js ./src/**/*.js",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anjrv/vef2-2021-v2.git"
+    "url": "git+https://github.com/anjrv/vef2-2021-v3.git"
   },
   "author": "",
   "license": "ISC",
